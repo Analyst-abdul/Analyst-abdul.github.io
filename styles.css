@@ -23,7 +23,7 @@ h1 {
   cursor: pointer;
 }
 
-#next-button {
+.next {
   font-size: 24px;
   padding: 10px 20px;
   background-color: #0DE5BA;
