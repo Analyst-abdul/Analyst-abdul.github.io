@@ -7,6 +7,7 @@ let timer;
 let endTime = Date.now() + 900000; // 15 minutes
 
 document.getElementById("startButton").addEventListener("click", startTimer);
+document.getElementById("submitButton").addEventListener("click", showReport);
 
 function startTimer() {
   document.getElementById("startButton").style.display = "none"; // Hide start button
