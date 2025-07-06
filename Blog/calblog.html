@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How to Make a Modern HTML Calculator - Step-by-Step Blog</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      color: #333;
+    }
+    h1, h2, h3 {
+      color: #4a4aef;
+    }
+    pre {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: monospace;
+    }
+    button.copy-btn {
+      background: #4a4aef;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+    button.copy-btn:hover {
+      background: #3838cc;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧮 How to Build a Modern HTML Calculator</h1>
+  <p>This tutorial will guide you step-by-step to create a stylish, responsive calculator using HTML, CSS, and JavaScript. Perfect for mobile and web, even if you code on your Android phone.</p>
+
+  <h2>🔧 Step 1: Create the HTML Structure</h2>
+  <p>First, create a <code>&lt;div&gt;</code> with the class <code>calculator</code> and place an input field and button layout inside it.</p>
+  <pre>
+&lt;div class="calculator"&gt;
+  &lt;input id="resultMain" readonly /&gt;
+  &lt;!-- Buttons will be added here --&gt;
+&lt;/div&gt;
+  </pre>
+
+  <h2>🎨 Step 2: Style the Calculator with CSS</h2>
+  <p>Add gradients, padding, shadows, and mobile responsiveness to make the calculator visually attractive. Below is a sample:</p>
+  <pre>body {
+  font-family: 'Segoe UI';
+  background: #f8f9fa;
+  padding: 20px;
+}
+.calculator {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 350px;
+  margin: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.calculator input {
+  width: 100%;
+  height: 60px;
+  font-size: 1.5em;
+  text-align: right;
+  padding: 0 15px;
+}</pre>
+
+  <h2>⚙️ Step 3: Add JavaScript Logic</h2>
+  <p>Use simple functions to evaluate input values, clear input, and show results:</p>
+  <pre>function appval(val, target) {
+  document.getElementById(target).value += val;
+}
+function clr(target) {
+  document.getElementById(target).value = '';
+}
+function cal(target) {
+  try {
+    let output = eval(document.getElementById(target).value);
+    document.getElementById(target).value = output;
+  } catch {
+    document.getElementById(target).value = "Error";
+  }
+}</pre>
+
+  <h2>📋 Copy Full Calculator Code</h2>
+  <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+  <pre id="calc-code">
+<!-- Your full code starts here -->
+<!-- Paste the entire HTML+CSS+JS code you wrote here for sharing -->
+
+    
+    &lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Calculator&lt;/title&gt;
+  &lt;style&gt;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: ‘Arial’, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .calculator {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      max-width: 350px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      font-weight: 300;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #result {
+      width: 100%;
+      height: 80px;
+      font-size: 2em;
+      text-align: right;
+      padding: 0 20px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 10px;
+    }
+
+    button {
+      width: 100%;
+      height: 60px;
+      font-size: 1.2em;
+      font-weight: 600;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Number buttons */
+    button:not([onclick*=”clr”]):not([onclick*=”cal”]):not([onclick*=”+”]):not([onclick*=”-“]):not([onclick*=”*”]):not([onclick*=”/”]) {
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      color: #333;
+    }
+
+    /* Operator buttons */
+    button[onclick*=”+”],
+    button[onclick*=”-“],
+    button[onclick*=”*”],
+    button[onclick*=”/”] {
+      background: linear-gradient(145deg, #ff6b6b, #ee5a24);
+      color: white;
+    }
+
+    /* Clear button */
+    button[onclick*=”clr”] {
+      background: linear-gradient(145deg, #ffa726, #ff9800);
+      color: white;
+    }
+
+    /* Equals button */
+    button[onclick*=”cal”] {
+      background: linear-gradient(145deg, #4CAF50, #45a049);
+      color: white;
+      height: 60px;
+      font-size: 1.5em;
+    }
+
+    /* Hover effects */
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Number button hover */
+    button:not([onclick*=”clr”]):not([onclick*=”cal”]):not([onclick*=”+”]):not([onclick*=”-“]):not([onclick*=”*”]):not([onclick*=”/”]):hover {
+      background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    }
+
+    /* Operator button hover */
+    button[onclick*=”+”]:hover,
+    button[onclick*=”-“]:hover,
+    button[onclick*=”*”]:hover,
+    button[onclick*=”/”]:hover {
+      background: linear-gradient(145deg, #ff5252, #d32f2f);
+    }
+
+    /* Clear button hover */
+    button[onclick*=”clr”]:hover {
+      background: linear-gradient(145deg, #ff9800, #f57c00);
+    }
+
+    /* Equals button hover */
+    button[onclick*=”cal”]:hover {
+      background: linear-gradient(145deg, #45a049, #388e3c);
+    }
+
+    /* Responsive design */
+    @media (max-width: 400px) {
+      .calculator {
+        margin: 20px;
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      #result {
+        height: 70px;
+        font-size: 1.5em;
+      }
+      
+      button {
+        height: 50px;
+        font-size: 1em;
+      }
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=”calculator”&gt;
+    &lt;h1&gt;Calculator&lt;/h1&gt;
+    &lt;table&gt;
+      &lt;tr&gt;
+        &lt;td colspan=”4”&gt;
+          &lt;input type=”text” id=”result” readonly&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;
+          &lt;button onclick=”appval(’1’)”&gt;1&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’2’)”&gt;2&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’3’)”&gt;3&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’+’)”&gt;+&lt;/button&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;
+          &lt;button onclick=”appval(’4’)”&gt;4&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’5’)”&gt;5&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’6’)”&gt;6&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’-‘)”&gt;-&lt;/button&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;
+          &lt;button onclick=”appval(’7’)”&gt;7&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’8’)”&gt;8&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’9’)”&gt;9&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’*’)”&gt;*&lt;/button&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;
+          &lt;button onclick=”appval(’.’)”&gt;.&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’0’)”&gt;0&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”clr()”&gt;C&lt;/button&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+          &lt;button onclick=”appval(’/’)”&gt;/&lt;/button&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td colspan=”4”&gt;&lt;button onclick=”cal()”&gt;=&lt;/button&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+  
+  &lt;script&gt;
+    function appval(val){
+      document.getElementById(”result”).value += val;
+    }
+    
+    function clr(val){
+      document.getElementById(”result”).value =’’;
+    }
+
+    function cal(){
+      try{
+        output = eval(document.getElementById(”result”).value);
+        document.getElementById(”result”).value = output;
+      } catch(e){
+        document.getElementById(”result”).value = “Error”
+      }
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+    
+    
+    
+    
+    
+  </pre>
+<iframe src="cal.html">
+  <script>
+    function copyCode() {
+      const code = document.getElementById("calc-code").innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.innerText = '✅ Copied!';
+        btn.style.background = '#4CAF50';
+        setTimeout(() => {
+          btn.innerText = '📋 Copy Code';
+          btn.style.background = '#4a4aef';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
