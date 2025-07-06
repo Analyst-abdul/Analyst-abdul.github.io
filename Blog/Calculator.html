@@ -1,0 +1,250 @@
+<html>
+<head>
+  <title>Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .calculator {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      max-width: 350px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      font-weight: 300;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #result {
+      width: 100%;
+      height: 80px;
+      font-size: 2em;
+      text-align: right;
+      padding: 0 20px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 10px;
+    }
+
+    button {
+      width: 100%;
+      height: 60px;
+      font-size: 1.2em;
+      font-weight: 600;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Number buttons */
+    button:not([onclick*="clr"]):not([onclick*="cal"]):not([onclick*="+"]):not([onclick*="-"]):not([onclick*="*"]):not([onclick*="/"]) {
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      color: #333;
+    }
+
+    /* Operator buttons */
+    button[onclick*="+"],
+    button[onclick*="-"],
+    button[onclick*="*"],
+    button[onclick*="/"] {
+      background: linear-gradient(145deg, #ff6b6b, #ee5a24);
+      color: white;
+    }
+
+    /* Clear button */
+    button[onclick*="clr"] {
+      background: linear-gradient(145deg, #ffa726, #ff9800);
+      color: white;
+    }
+
+    /* Equals button */
+    button[onclick*="cal"] {
+      background: linear-gradient(145deg, #4CAF50, #45a049);
+      color: white;
+      height: 60px;
+      font-size: 1.5em;
+    }
+
+    /* Hover effects */
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Number button hover */
+    button:not([onclick*="clr"]):not([onclick*="cal"]):not([onclick*="+"]):not([onclick*="-"]):not([onclick*="*"]):not([onclick*="/"]):hover {
+      background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    }
+
+    /* Operator button hover */
+    button[onclick*="+"]:hover,
+    button[onclick*="-"]:hover,
+    button[onclick*="*"]:hover,
+    button[onclick*="/"]:hover {
+      background: linear-gradient(145deg, #ff5252, #d32f2f);
+    }
+
+    /* Clear button hover */
+    button[onclick*="clr"]:hover {
+      background: linear-gradient(145deg, #ff9800, #f57c00);
+    }
+
+    /* Equals button hover */
+    button[onclick*="cal"]:hover {
+      background: linear-gradient(145deg, #45a049, #388e3c);
+    }
+
+    /* Responsive design */
+    @media (max-width: 400px) {
+      .calculator {
+        margin: 20px;
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      #result {
+        height: 70px;
+        font-size: 1.5em;
+      }
+      
+      button {
+        height: 50px;
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h1>Calculator</h1>
+    <table>
+      <tr>
+        <td colspan="4">
+          <input type="text" id="result" readonly>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button onclick="appval('1')">1</button>
+        </td>
+         <td>
+          <button onclick="appval('2')">2</button>
+        </td>
+         <td>
+          <button onclick="appval('3')">3</button>
+        </td>
+         <td>
+          <button onclick="appval('+')">+</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button onclick="appval('4')">4</button>
+        </td>
+         <td>
+          <button onclick="appval('5')">5</button>
+        </td>
+         <td>
+          <button onclick="appval('6')">6</button>
+        </td>
+         <td>
+          <button onclick="appval('-')">-</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button onclick="appval('7')">7</button>
+        </td>
+         <td>
+          <button onclick="appval('8')">8</button>
+        </td>
+         <td>
+          <button onclick="appval('9')">9</button>
+        </td>
+         <td>
+          <button onclick="appval('*')">*</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button onclick="appval('.')">.</button>
+        </td>
+         <td>
+          <button onclick="appval('0')">0</button>
+        </td>
+         <td>
+          <button onclick="clr()">C</button>
+        </td>
+         <td>
+          <button onclick="appval('/')">/</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4"><button onclick="cal()">=</button></td>
+      </tr>
+    </table>
+  </div>
+  
+  <script>
+    function appval(val){
+      document.getElementById("result").value += val;
+    }
+    
+    function clr(val){
+      document.getElementById("result").value ='';
+    }
+
+    function cal(){
+      try{
+        output = eval(document.getElementById("result").value);
+        document.getElementById("result").value = output;
+      } catch(e){
+        document.getElementById("result").value = "Error"
+      }
+    }
+  </script>
+</body>  
+</html>
