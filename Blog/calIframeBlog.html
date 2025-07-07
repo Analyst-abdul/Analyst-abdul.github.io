@@ -1,48 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abdul Hasan Sk - Commerce Teacher & Research Analyst</title>
-    <link rel="stylesheet" href="../style.css">
-    <style>
-        iframe {
-            width: 100%;
-            height: 650;
-            border: none;
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog by Abdul</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .header {
+      position: relative;
+      height: 450px;
+      background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+      border-radius: 0 0 50px 50px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .cover-photo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=2000&q=80') center/cover;
+      opacity: 0.7;
+      transition: transform 0.5s ease;
+    }
+
+    .header:hover .cover-photo {
+      transform: scale(1.05);
+    }
+
+    .header-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(26, 26, 46, 0.8), rgba(15, 52, 96, 0.6));
+    }
+
+    .profile-section {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+      text-align: center;
+    }
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      background: url('profile.jpg') center/cover;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: float 3s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-picture:hover {
+      transform: scale(1.1);
+    }
+
+    .profile-name {
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-top: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+
+    .profile-title {
+      color: #64ffda;
+      font-size: 1.2rem;
+      margin-top: 10px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    }
+
+    .credentials {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .credential {
+      background: rgba(100, 255, 218, 0.2);
+      color: #64ffda;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(100, 255, 218, 0.3);
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 10px 20px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav-links a:hover::before {
+      left: 100%;
+    }
+
+    .nav-links a:hover {
+      color: #667eea;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+      display: block;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header with Cover Photo and Profile -->
-    <header class="header">
-        <div class="cover-photo"></div>
-        <div class="header-overlay"></div>
-        <div class="profile-section">
-            <div class="profile-picture"></div>
-            <h1 class="profile-name">Abdul Hasan Sk</h1>
-            <p class="profile-title">Commerce Teacher | Research Analyst | Entrepreneur</p>
-            <div class="credentials">
-                <span class="credential">M.Com</span>
-                <span class="credential">SEBI Certified Research Analyst</span>
-                <span class="credential">Certified Data Scientist</span>
-                <span class="credential">Certified Artist</span>
-            </div>
-        </div>
-    </header>
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
-        </div>
-    </nav>
+  <!-- Header -->
+  <header class="header">
+    <div class="cover-photo"></div>
+    <div class="header-overlay"></div>
+    <div class="profile-section">
+      <div class="profile-picture"></div>
+      <h1 class="profile-name">Abdul Hasan Sk</h1>
+      <p class="profile-title">Commerce Teacher | Research Analyst | Entrepreneur</p>
+      <div class="credentials">
+        <span class="credential">M.Com</span>
+        <span class="credential">SEBI Certified Research Analyst</span>
+        <span class="credential">Certified Data Scientist</span>
+        <span class="credential">Certified Artist</span>
+      </div>
+    </div>
+  </header>
 
-    <iframe src="calblog.html">
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Iframe Section -->
+  <iframe src="calblog.html"></iframe>
+
 </body>
 </html>
