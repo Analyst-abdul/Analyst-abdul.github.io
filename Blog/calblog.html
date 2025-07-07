@@ -11,9 +11,11 @@
       padding: 20px;
       color: #333;
     }
+
     h1, h2, h3 {
       color: #4a4aef;
     }
+
     pre {
       background: #2d2d2d;
       color: #f8f8f2;
@@ -22,6 +24,7 @@
       overflow-x: auto;
       font-family: monospace;
     }
+
     button.copy-btn {
       background: #4a4aef;
       color: white;
@@ -31,18 +34,42 @@
       cursor: pointer;
       margin: 10px 0;
     }
+
     button.copy-btn:hover {
       background: #3838cc;
     }
-    
-        iframe {
-            width: 100%;
-            height: 100vh;
-            border: none;
-            display: block;
-        }
-    
+
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+      display: block;
+      border-radius: 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 40px;
+      overflow: hidden;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #4a4aef;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      iframe {
+        height: 90vh;
+      }
+    }
   </style>
+ 
 </head>
 <body>
   <h1>🧮 How to Build a Modern HTML Calculator</h1>
@@ -361,7 +388,10 @@ function cal(target) {
     
     
   </pre>
-<iframe src="Calculator.html">
+<div class="card">
+    <h2>📱 Try the Calculator Live</h2>
+    <iframe src="Calculator.html" title="Embedded Calculator"></iframe>
+</div>
   <script>
     function copyCode() {
       const code = document.getElementById("calc-code").innerText;
