@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <title>FinTrack — Personal Budget</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <!-- Loader -->
+  <div id="loader" class="loader hidden">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- =========================
+       AUTH VIEW
+  ========================== -->
+  <section id="auth-view" class="auth-view">
+
+    <div class="auth-card">
+
+      <h1 class="brand">💸 FinTrack</h1>
+      <p class="muted">Your personal budget, in your pocket.</p>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="login">Login</button>
+        <button class="tab" data-tab="register">Register</button>
+        <button class="tab" data-tab="forgot">Forgot</button>
+      </div>
+
+      <!-- Login -->
+      <form id="login-form" class="auth-form">
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          autocomplete="email"
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+          autocomplete="current-password"
+        />
+
+        <button type="submit" class="btn primary">
+          Sign in
+        </button>
+
+      </form>
+
+      <!-- Register -->
+      <form id="register-form" class="auth-form hidden">
+
+        <input
+          type="text"
+          name="name"
+          placeholder="Display name"
+          required
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          autocomplete="email"
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password (min 6)"
+          minlength="6"
+          required
+          autocomplete="new-password"
+        />
+
+        <button type="submit" class="btn primary">
+          Create account
+        </button>
+
+      </form>
+
+      <!-- Forgot -->
+      <form id="forgot-form" class="auth-form hidden">
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+
+        <button type="submit" class="btn primary">
+          Send reset link
+        </button>
+
+      </form>
+
+      <p id="auth-msg" class="auth-msg"></p>
+
+    </div>
+
+  </section>
+
+  <!-- =========================
+       MAIN APP
+  ========================== -->
+  <main id="app-view" class="hidden">
+
+    <!-- Topbar -->
+    <header class="topbar">
+
+      <div>
+        <small class="muted">Hello,</small>
+        <h2 id="user-name">—</h2>
+      </div>
+
+      <div class="top-actions">
+
+        <select id="view-user" class="select-inline" title="View user"></select>
+
+        <button
+          id="theme-toggle"
+          class="icon-btn"
+          title="Theme"
+        >
+          🌓
+        </button>
+
+      </div>
+
+    </header>
+
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
+    <section data-page="dashboard" class="page active">
+
+      <!-- Hero -->
+      <div class="card hero">
+
+        <small class="muted">Total balance</small>
+
+        <h1 id="kpi-balance">$0.00</h1>
+
+        <div class="row">
+
+          <div>
+            <small class="muted">Income</small>
+            <div id="kpi-income" class="pos">$0</div>
+          </div>
+
+          <div>
+            <small class="muted">Expense</small>
+            <div id="kpi-expense" class="neg">$0</div>
+          </div>
+
+          <div>
+            <small class="muted">Budget left</small>
+            <div id="kpi-budget">$0</div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Monthly Overview -->
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Monthly overview</h3>
+
+          <select id="range-select">
+            <option value="week">Week</option>
+            <option value="month" selected>Month</option>
+            <option value="year">Year</option>
+          </select>
+
+        </div>
+
+        <div class="chart-box">
+          <canvas id="chart-trend"></canvas>
+        </div>
+
+      </div>
+
+      <!-- Pie Chart -->
+      <div class="card">
+
+        <div class="card-head">
+          <h3>Expenses by category</h3>
+        </div>
+
+        <div class="chart-box">
+          <canvas id="chart-pie"></canvas>
+        </div>
+
+      </div>
+
+      <!-- Accounts -->
+      <div class="card">
+
+        <div class="card-head">
+          <h3>Accounts</h3>
+        </div>
+
+        <div id="acct-mini" class="acct-mini"></div>
+
+      </div>
+
+      <!-- Recent -->
+      <div class="card">
+
+        <div class="card-head">
+          <h3>Recent transactions</h3>
+        </div>
+
+        <ul id="recent-tx" class="tx-list"></ul>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         ACCOUNTS
+    ========================== -->
+    <section data-page="accounts" class="page">
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Accounts</h3>
+
+          <button class="btn ghost" id="add-acct-btn">
+            + Add
+          </button>
+
+        </div>
+
+        <ul id="acct-list" class="tx-list"></ul>
+
+      </div>
+
+      <div class="card">
+
+        <div class="card-head">
+          <h3>Transfer</h3>
+        </div>
+
+        <form id="transfer-form" class="grid-form">
+
+          <select name="from" required></select>
+
+          <select name="to" required></select>
+
+          <input
+            name="amount"
+            type="number"
+            step="0.01"
+            min="0.01"
+            placeholder="Amount"
+            required
+          />
+
+          <button class="btn primary" type="submit">
+            Transfer
+          </button>
+
+        </form>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         TRANSACTIONS
+    ========================== -->
+    <section data-page="transactions" class="page">
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Transactions</h3>
+
+          <button class="btn ghost" id="add-tx-btn">
+            + Add
+          </button>
+
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+
+          <input
+            type="search"
+            id="tx-search"
+            placeholder="Search note..."
+          />
+
+          <input type="month" id="tx-month" />
+
+          <select id="tx-cat-filter">
+            <option value="">All categories</option>
+          </select>
+
+        </div>
+
+        <ul id="tx-list" class="tx-list"></ul>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         BUDGET
+    ========================== -->
+    <section data-page="budget" class="page">
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Budgets</h3>
+
+          <button class="btn ghost" id="add-budget-btn">
+            + Add
+          </button>
+
+        </div>
+
+        <ul id="budget-list" class="tx-list"></ul>
+
+      </div>
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Categories</h3>
+
+          <button class="btn ghost" id="add-cat-btn">
+            + Add
+          </button>
+
+        </div>
+
+        <ul id="cat-list" class="tx-list"></ul>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         ANALYTICS
+    ========================== -->
+    <section data-page="analytics" class="page">
+
+      <!-- Bar -->
+      <div class="card">
+
+        <div class="card-head">
+          <h3>Income vs Expense</h3>
+        </div>
+
+        <div class="chart-box">
+          <canvas id="chart-bar"></canvas>
+        </div>
+
+      </div>
+
+      <!-- Savings -->
+      <div class="card">
+
+        <div class="card-head">
+          <h3>Savings trend</h3>
+        </div>
+
+        <div class="chart-box">
+          <canvas id="chart-savings"></canvas>
+        </div>
+
+      </div>
+
+      <!-- Category -->
+      <div class="card">
+
+        <div class="card-head">
+          <h3>Category comparison</h3>
+        </div>
+
+        <div class="chart-box">
+          <canvas id="chart-catbar"></canvas>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         SETTINGS
+    ========================== -->
+    <section data-page="settings" class="page">
+
+      <!-- Profile -->
+      <div class="card">
+
+        <h3>Profile</h3>
+
+        <form id="profile-form" class="grid-form">
+
+          <input
+            name="display_name"
+            placeholder="Display name"
+          />
+
+          <select name="currency">
+            <option>USD</option>
+            <option>EUR</option>
+            <option>GBP</option>
+            <option>INR</option>
+            <option>BDT</option>
+            <option>JPY</option>
+          </select>
+
+          <button class="btn primary" type="submit">
+            Save
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- Sharing -->
+      <div class="card">
+
+        <h3>Sharing</h3>
+
+        <p class="muted">
+          Share your data (read-only) with another user by email.
+        </p>
+
+        <form id="share-form" class="grid-form">
+
+          <input
+            name="email"
+            type="email"
+            placeholder="user@example.com"
+            required
+          />
+
+          <button class="btn primary" type="submit">
+            Share
+          </button>
+
+        </form>
+
+        <ul id="share-list" class="tx-list"></ul>
+
+      </div>
+
+      <!-- Export -->
+      <div class="card">
+
+        <h3>Data</h3>
+
+        <div class="row gap">
+
+          <button class="btn ghost" id="export-json">
+            Export JSON
+          </button>
+
+          <button class="btn ghost" id="export-csv">
+            Export CSV
+          </button>
+
+          <button class="btn ghost" id="export-pdf">
+            Export PDF
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- Logout -->
+      <div class="card">
+
+        <button class="btn danger" id="logout-btn">
+          Log out
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         BOTTOM NAV
+    ========================== -->
+    <nav class="bottom-nav">
+
+      <button data-go="dashboard" class="active">
+        🏠
+        <span>Home</span>
+      </button>
+
+      <button data-go="accounts">
+        💳
+        <span>Accounts</span>
+      </button>
+
+      <button data-go="transactions">
+        📒
+        <span>Tx</span>
+      </button>
+
+      <button data-go="budget">
+        🎯
+        <span>Budget</span>
+      </button>
+
+      <button data-go="analytics">
+        📊
+        <span>Stats</span>
+      </button>
+
+      <button data-go="settings">
+        ⚙️
+        <span>More</span>
+      </button>
+
+    </nav>
+
+  </main>
+
+  <!-- =========================
+       MODAL
+  ========================== -->
+  <div id="modal" class="modal hidden">
+
+    <div class="modal-card">
+
+      <div class="modal-head">
+
+        <h3 id="modal-title">Modal</h3>
+
+        <button id="modal-close" class="icon-btn">
+          ✕
+        </button>
+
+      </div>
+
+      <div id="modal-body"></div>
+
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Install -->
+  <button id="install-btn" class="install-btn hidden">
+    📲 Install
+  </button>
+
+  <!-- =========================
+       LIBRARIES
+  ========================== -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+  <!-- =========================
+       APP FILES
+  ========================== -->
+  <script src="js/config.js"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Service Worker -->
+  <script>
+
+    if ('serviceWorker' in navigator) {
+
+      window.addEventListener('load', () => {
+
+        navigator.serviceWorker.register('sw.js');
+
+      });
+
+    }
+
+  </script>
+
+</body>
+</html>
